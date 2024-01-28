@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест з літератури</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .submit-btn, .retry-btn {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .correct-answer {
+      color: green;
+      font-weight: bold;
+    }
+
+    .wrong-answer {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div id="quiz-container"></div>
+  <button class="submit-btn" onclick="submitTest()">Завершити тест</button>
+  <button class="retry-btn" onclick="resetTest()">Повторити тест</button>
+</div>
+
+<script>
+  var quizzes = [
+    {
+      question: "Хто автор роману 'Собор' (1968 р.)?",
+      options: ["Іван Світличний", "Олесь Гончар", "Василь Стус"],
+      correctAnswer: 1,
+    },
+    {
+      question: "Хто є автором циклу 'Гранатові сонети'?",
+      options: ["Євген Сверстюк", "Василь Симоненко", "Ліна Костенко"],
+      correctAnswer: 0,
+    },
+    {
+  question: "Яким літературним напрямком представлений Олесь Гончар?",
+  options: ["Сюрреалізм", "Реалізм", "Модернізм"],
+  correctAnswer: 1,
+},
+{
+  question: "Яка прізвище Василя Симоненка?",
+  options: ["Кобзар", "Бард", "Свічадо"],
+  correctAnswer: 2,
+},
+{
+  question: "Що є назвою роману Ліни Костенко?",
+  options: ["'Земля любові'", "'Маруся Чурай'", "'Берестечко'"],
+  correctAnswer: 0,
+},
+{
+  question: "Хто є автором роману 'Берег любові'?",
+  options: ["Іван Світличний", "Олесь Гончар", "Ліна Костенко"],
+  correctAnswer: 1,
+},
+{
+  question: "Яка прізвище Євгена Сверстюка?",
+  options: ["Жовтень", "Гусак", "Шаман"],
+  correctAnswer: 0,
+},
+{
+  question: "В якому році народилася Ліна Костенко?",
+  options: ["1939", "1945", "1950"],
+  correctAnswer: 2,
+},
+{
+  question: "Де народився Левко Лук’яненко?",
+  options: ["Львів", "Київ", "Харків"],
+  correctAnswer: 0,
+},
+{
+  question: "Яка книга Івана Драча стала його літературним дебютом?",
+  options: ["'Протуберанці серця'", "'Корінь і крона'", "'Балада про соняшник'"],
+  correctAnswer: 0,
+},
+{
+  question: "Де навчався Іван Дзюба?",
+  options: ["Львівський університет", "Київський університет", "Харківський університет"],
+  correctAnswer: 1,
+},
+{
+  question: "У якому році було засновано Українську робітничо-селянську спілку?",
+  options: ["1959", "1965", "1976"],
+  correctAnswer: 0,
+},{
+  question: "Що є назвою трилогії Олеся Гончара?",
+  options: ["Тронка", "Собор", "Прапороносці"],
+  correctAnswer: 2,
+},
+{
+  question: "У якому році народився Іван Світличний?",
+  options: ["1925", "1930", "1935"],
+  correctAnswer: 0,
+},
+{
+  question: "Які твори Василя Стуса входять до збірки 'Круговерть'?",
+  options: ["Лебеді материнства", "Зимові дерева", "Веселий цвинтар"],
+  correctAnswer: 2,
+},
+{
+  question: "До якої групи входив Євген Сверстюк?",
+  options: ["Українська Гельсінська група", "Львівська група", "Київська опозиція"],
+  correctAnswer: 0,
+},
+{
+  question: "Яким літературним напрямком відзначався Василь Симоненко?",
+  options: ["Реалізм", "Модернізм", "Шістдесятництво"],
+  correctAnswer: 2,
+},
+{
+  question: "У якому році народилася Ліна Костенко?",
+  options: ["1936", "1940", "1945"],
+  correctAnswer: 1,
+},
+{
+  question: "Де навчався Лесь Танюк?",
+  options: ["Львівський університет", "Київський університет", "Одеський університет"],
+  correctAnswer: 0,
+},
+{
+  question: "У якому році було написано вірш 'Лебеді материнства' Василя Симоненка?",
+  options: ["1955", "1960", "1970"],
+  correctAnswer: 2,
+},
+{
+  question: "Що є назвою першої збірки Євгена Сверстюка?",
+  options: ["Гранатові сонети", "Моя країна", "Інтелігенція і влада"],
+  correctAnswer: 0,
+},
+{
+  question: "У якому році помер Василь Симоненко?",
+  options: ["1968", "1973", "1985"],
+  correctAnswer: 2,
+},
+{
+  question: "До якого покоління відноситься Ліна Костенко?",
+  options: ["Шістдесятники", "Сімдесятники", "Восьмдесятники"],
+  correctAnswer: 0,
+},
+{
+  question: "У якому році народився Лесь Танюк?",
+  options: ["1938", "1942", "1947"],
+  correctAnswer: 2,
+},
+{
+  question: "Де працював Іван Драч як професор?",
+  options: ["Київський університет", "Львівський університет", "Харківський університет"],
+  correctAnswer: 0,
+},
+{
+  question: "У якому році було засновано Українську робітничо-селянську спілку?",
+  options: ["1955", "1961", "1970"],
+  correctAnswer: 1,
+}];
+  quizzes = shuffle(quizzes);
+
+  var quizContainer = document.getElementById("quiz-container");
+
+  quizzes.forEach(function (quiz, index) {
+    var questionDiv = document.createElement("div");
+    questionDiv.className = "question";
+    questionDiv.textContent = (index + 1) + ". " + quiz.question;
+
+    var optionsDiv = document.createElement("div");
+    optionsDiv.className = "options";
+
+    quiz.options.forEach(function (option, optionIndex) {
+      var optionLabel = document.createElement("label");
+      optionLabel.className = "option";
+      optionLabel.innerHTML = '<input type="radio" name="q' + (index + 1) + '" value="' + optionIndex + '"> ' + option;
+      optionsDiv.appendChild(optionLabel);
+    });
+
+    quizContainer.appendChild(questionDiv);
+    quizContainer.appendChild(optionsDiv);
+  });
+
+  var retryBtn = document.querySelector(".retry-btn");
+  retryBtn.style.display = "none";
+
+  function submitTest() {
+    var score = 0;
+
+    quizzes.forEach(function (quiz, index) {
+      var selectedOption = document.querySelector('input[name="q' + (index + 1) + '"]:checked');
+      if (selectedOption) {
+        var selectedAnswer = parseInt(selectedOption.value);
+        if (selectedAnswer === quiz.correctAnswer) {
+          score++;
+          highlightAnswer(index + 1, true);
+        } else {
+          highlightAnswer(index + 1, false);
+        }
+      }
+    });
+
+    var resultMessage = "Ваш результат: " + score + " з " + quizzes.length;
+
+    var resultDiv = document.createElement("div");
+    resultDiv.textContent = resultMessage;
+    quizContainer.appendChild(resultDiv);
+
+    quizzes.forEach(function (quiz, index) {
+      var correctAnswerDiv = document.createElement("div");
+      correctAnswerDiv.className = "correct-answer";
+      correctAnswerDiv.textContent = "Правильна відповідь на питання " + (index + 1) + ": " + quiz.options[quiz.correctAnswer];
+      quizContainer.appendChild(correctAnswerDiv);
+    });
+
+    retryBtn.style.display = "block";
+  }
+
+  function highlightAnswer(questionNumber, isCorrect) {
+    var options = document.querySelectorAll('input[name="q' + questionNumber + '"]');
+    options.forEach(function (option) {
+      var label = option.parentNode;
+      if (isCorrect) {
+        label.classList.add("correct-answer");
+      } else {
+        label.classList.add("wrong-answer");
+      }
+    });
+  }
+
+  function resetTest() {
+    location.reload();
+  }
+
+  function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+</script>
+
+</body>
+</html>
