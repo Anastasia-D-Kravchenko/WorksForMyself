@@ -1,3 +1,4 @@
+import os
 from vosk import Model, KaldiRecognizer
 import pyaudio
 import json, os, sys, smtplib
@@ -16,8 +17,8 @@ if not os.path.exists("model"):
     exit (1)
 model = Model("model")
 def send_email(message):
-    sender = "bazaprosto82@gmail.com"
-    password = "kfsmywqlumglfpnf"
+    sender = os.environ["EMAIL_SENDER"]
+    password = os.environ["EMAIL_APP_PASSWORD"]
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
     try:

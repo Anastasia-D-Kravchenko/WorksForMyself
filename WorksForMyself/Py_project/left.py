@@ -214,9 +214,6 @@
 #
 #
 # def send_email(message):
-#     sender = "bazaprosto82@gmail.com"
-#     # your password = "your password"
-#     password = "kfsmywqlumglfpnf"
 #
 #     server = smtplib.SMTP("smtp.gmail.com", 587)
 #     server.starttls()
